@@ -14,8 +14,6 @@ class ChantierEtape
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'chantierEtapes')]
-    private ?Poste $poste = null;
 
     #[ORM\ManyToOne(inversedBy: 'chantierEtapes')]
     private ?Etape $etape = null;
@@ -35,22 +33,14 @@ class ChantierEtape
     #[ORM\Column(nullable: true)]
     private ?float $dateDecimal = null;
 
+    #[ORM\ManyToOne(inversedBy: 'chantierEtapes')]
+    private ?chantier $chantier = null;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getPoste(): ?Poste
-    {
-        return $this->poste;
-    }
-
-    public function setPoste(?Poste $poste): static
-    {
-        $this->poste = $poste;
-
-        return $this;
-    }
 
     public function getEtape(): ?Etape
     {
@@ -120,6 +110,18 @@ class ChantierEtape
     public function setDateDecimal(?float $dateDecimal): static
     {
         $this->dateDecimal = $dateDecimal;
+
+        return $this;
+    }
+
+    public function getChantier(): ?chantier
+    {
+        return $this->chantier;
+    }
+
+    public function setChantier(?chantier $chantier): static
+    {
+        $this->chantier = $chantier;
 
         return $this;
     }

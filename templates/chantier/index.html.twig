@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chantier index{% endblock %}
+
+{% block body %}
+    <h1>Chantier index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Adresse</th>
+                <th>Copos</th>
+                <th>Ville</th>
+                <th>DatePrevue</th>
+                <th>DateDemarrage</th>
+                <th>DateFin</th>
+                <th>DateReception</th>
+                <th>DistanceDepot</th>
+                <th>TempsTrajet</th>
+                <th>SurfaceMaison</th>
+                <th>SurfaceCombles</th>
+                <th>Archive</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for chantier in chantiers %}
+            <tr>
+                <td>{{ chantier.id }}</td>
+                <td>{{ chantier.adresse }}</td>
+                <td>{{ chantier.copos }}</td>
+                <td>{{ chantier.ville }}</td>
+                <td>{{ chantier.datePrevue ? chantier.datePrevue|date('Y-m-d') : '' }}</td>
+                <td>{{ chantier.dateDemarrage ? chantier.dateDemarrage|date('Y-m-d') : '' }}</td>
+                <td>{{ chantier.dateFin ? chantier.dateFin|date('Y-m-d') : '' }}</td>
+                <td>{{ chantier.dateReception ? chantier.dateReception|date('Y-m-d') : '' }}</td>
+                <td>{{ chantier.distanceDepot }}</td>
+                <td>{{ chantier.tempsTrajet }}</td>
+                <td>{{ chantier.surfaceMaison }}</td>
+                <td>{{ chantier.surfaceCombles }}</td>
+                <td>{{ chantier.archive }}</td>
+                <td>
+                    <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}">show</a>
+                    <a href="{{ path('app_chantier_edit', {'id': chantier.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_chantier_new') }}">Create new</a>
+{% endblock %}

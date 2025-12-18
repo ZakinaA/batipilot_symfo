@@ -1,0 +1,207 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le Chantier{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Modifier le chantier - {{ chantier.ville }}</h1>
+
+    {{ form_start(form, {'attr': {'class': 'chantier-form'}}) }}
+
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h3 class="mb-0"><i class="bi bi-person-fill"></i> Informations du client</h3>
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    {{ form_row(form.client) }}
+                    <small class="text-muted">Client actuel : {{ chantier.client ? chantier.client.nom ~ ' ' ~ chantier.client.prenom : 'Aucun' }}</small>
+                </div>
+            </div>
+
+            <div class="nouveau-client-section">
+                <h5 class="text-muted mb-3">Ou créer un nouveau client</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.nouveauClientNom) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.nouveauClientPrenom) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(form.nouveauClientTelephone) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.nouveauClientMail) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0"><i class="bi bi-building"></i> Informations du chantier</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form_row(form.adresse) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_row(form.copos) }}
+                </div>
+                <div class="col-md-8">
+                    {{ form_row(form.ville) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.datePrevue) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.dateDemarrage) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.dateFin) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.dateReception) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form_row(form.distanceDepot) }}
+                </div>
+                <div class="col-md-4">
+                    {{ form_row(form.tempsTrajet) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.surfaceMaison) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.surfaceCombles) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h3 class="mb-0"><i class="bi bi-check2-square"></i> Étapes par poste</h3>
+        </div>
+        <div class="card-body">
+            {% set current_poste_id = null %}
+            {% set postes_affiches = {} %}
+
+            {% for child in form.children %}
+                {% if child.vars.name starts with 'etape_' %}
+                    {% set poste_id = child.vars.attr['data-poste-id'] ?? '' %}
+                    {% set poste_nom = child.vars.attr['data-poste-nom'] ?? '' %}
+
+                    {# Vérifier si on change de poste #}
+                    {% if poste_id != current_poste_id %}
+                        {% if current_poste_id is not null %}
+                            </div></div> {# Fermer le poste précédent #}
+                        {% endif %}
+
+                        {% set current_poste_id = poste_id %}
+                        {% set postes_affiches = postes_affiches|merge({(poste_id): true}) %}
+
+                        <div class="poste-section mb-4">
+                            <h4 class="border-bottom pb-2 mb-3">
+                                <i class="bi bi-folder"></i> {{ poste_nom }}
+                            </h4>
+                            <div class="row">
+                    {% endif %}
+
+                    <div class="col-md-6 mb-3">
+                        {{ form_row(child) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            {% if current_poste_id is not null %}
+                </div></div> {# Fermer le dernier poste #}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}" class="btn btn-secondary btn-lg">
+            <i class="bi bi-arrow-left"></i> Annuler
+        </a>
+        <button type="submit" class="btn btn-warning btn-lg">
+            <i class="bi bi-save"></i> Enregistrer les modifications
+        </button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+<style>
+    .poste-section {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #28a745;
+    }
+
+    .poste-section h4 {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .nouveau-client-section {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        border: 1px dashed #6c757d;
+        transition: opacity 0.3s ease;
+    }
+
+    .card-header h3 {
+        font-size: 1.25rem;
+    }
+
+    .card-header i {
+        margin-right: 8px;
+    }
+</style>
+
+<script>
+    // Gérer l'affichage conditionnel du formulaire nouveau client
+    document.addEventListener('DOMContentLoaded', function() {
+        const clientSelect = document.querySelector('select[name*="[client]"]');
+        const nouveauClientSection = document.querySelector('.nouveau-client-section');
+
+        if (clientSelect && nouveauClientSection) {
+            function toggleNouveauClient() {
+                if (clientSelect.value) {
+                    nouveauClientSection.style.opacity = '0.5';
+                    nouveauClientSection.querySelectorAll('input').forEach(input => {
+                        input.disabled = true;
+                    });
+                } else {
+                    nouveauClientSection.style.opacity = '1';
+                    nouveauClientSection.querySelectorAll('input').forEach(input => {
+                        input.disabled = false;
+                    });
+                }
+            }
+
+            clientSelect.addEventListener('change', toggleNouveauClient);
+            toggleNouveauClient();
+        }
+    });
+</script>
+{% endblock %}

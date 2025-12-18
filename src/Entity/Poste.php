@@ -33,16 +33,11 @@ class Poste
     #[ORM\OneToMany(targetEntity: Etape::class, mappedBy: 'poste')]
     private Collection $etapes;
 
-    /**
-     * @var Collection<int, ChantierEtape>
-     */
-    #[ORM\OneToMany(targetEntity: ChantierEtape::class, mappedBy: 'poste')]
-    private Collection $chantierEtapes;
+
 
     public function __construct()
     {
         $this->etapes = new ArrayCollection();
-        $this->chantierEtapes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,33 +123,5 @@ class Poste
         return $this;
     }
 
-    /**
-     * @return Collection<int, ChantierEtape>
-     */
-    public function getChantierEtapes(): Collection
-    {
-        return $this->chantierEtapes;
-    }
 
-    public function addChantierEtape(ChantierEtape $chantierEtape): static
-    {
-        if (!$this->chantierEtapes->contains($chantierEtape)) {
-            $this->chantierEtapes->add($chantierEtape);
-            $chantierEtape->setPoste($this);
-        }
-
-        return $this;
-    }
-
-    public function removeChantierEtape(ChantierEtape $chantierEtape): static
-    {
-        if ($this->chantierEtapes->removeElement($chantierEtape)) {
-            // set the owning side to null (unless already changed)
-            if ($chantierEtape->getPoste() === $this) {
-                $chantierEtape->setPoste(null);
-            }
-        }
-
-        return $this;
-    }
 }
