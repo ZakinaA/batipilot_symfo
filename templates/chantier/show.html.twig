@@ -118,50 +118,52 @@
             <h3 class="mb-0"><i class="bi bi-check2-square"></i> Étapes du Chantier</h3>
         </div>
         <div class="card-body">
-            {% if etapesParPoste is empty %}
-                <p class="text-muted">Aucune étape renseignée pour ce chantier.</p>
-            {% else %}
-                {% for posteId, groupe in etapesParPoste %}
-                    <div class="poste-section mb-4">
-                        <h4 class="border-bottom pb-2 mb-3">
-                            <i class="bi bi-folder"></i> {{ groupe.poste.libelle }}
-                        </h4>
+            {% for cp in chantier.chantierPostes %}
+                <h1>{{cp.poste.libelle}}  {{cp.montantHT}}  {{cp.montantTTC}}</h1>
 
-                        <div class="row">
-                            {% for chantierEtape in groupe.etapes %}
-                                <div class="col-md-6 mb-3">
-                                    <div class="etape-item">
-                                        <strong>{{ chantierEtape.etape.libelle }} :</strong>
-                                        <span class="ms-2">
-                                            {% set formatId = chantierEtape.etape.etapeFormat.id %}
+                {% for ce in chantier.chantierEtapes %}
+
+                    {% if ce.etape.poste.id == cp.poste.id %}
+                        <strong>{{ ce.etape.libelle }} </strong>
+                        <span class="ms-2">
+                                            {% set formatId = ce.etape.etapeFormat.id %}
 
                                             {% if formatId == 1 %}
                                                 {# Oui, non, sans objet #}
-                                                {% if chantierEtape.valBoolean is not null %}
-                                                    <span class="badge bg-{{ chantierEtape.valBoolean ? 'success' : 'danger' }}">
-                                                        {{ chantierEtape.valBoolean ? 'Oui' : 'Non' }}
+                                                {% if ce.valBoolean is not null %}
+                                                    <span class="badge bg-{{ ce.valBoolean ? 'success' : 'danger' }}">
+                                                        {{ ce.valBoolean ? 'Oui' : 'Non' }}
                                                     </span>
                                                 {% else %}
                                                     <span class="badge bg-secondary">Sans objet</span>
                                                 {% endif %}
                                             {% elseif formatId == 2 %}
                                                 {# Date #}
-                                                {{ chantierEtape.valDate ? chantierEtape.valDate|date('d/m/Y') : '-' }}
+                                                {{ ce.valDate ? ce.valDate|date('d/m/Y') : '-' }}
                                             {% elseif formatId == 3 %}
                                                 {# Date et heure #}
-                                                {{ chantierEtape.valDateHeure ? chantierEtape.valDateHeure|date('d/m/Y H:i') : '-' }}
+                                                {{ ce.valDateHeure ? ce.valDateHeure|date('d/m/Y H:i') : '-' }}
                                             {% elseif formatId == 4 %}
                                                 {# Texte #}
-                                                {{ chantierEtape.valText ?? '-' }}
+                                                {{ ce.valText ?? '-' }}
                                             {% endif %}
-                                        </span>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
+                                        </span></br>
+                    {% endif %}
+
                 {% endfor %}
-            {% endif %}
+
+
+
+            {% endfor %}
+
+
+
+
+
+
+
+
+
         </div>
     </div>
 

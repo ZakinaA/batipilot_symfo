@@ -8,40 +8,30 @@
 
     {{ form_start(form, {'attr': {'class': 'chantier-form'}}) }}
 
+    {# Section Client #}
     <div class="card mb-4">
         <div class="card-header bg-info text-white">
             <h3 class="mb-0"><i class="bi bi-person-fill"></i> Informations du client</h3>
         </div>
         <div class="card-body">
-            <div class="nouveau-client-section">
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.client.nom.vars.label }}</label>
-                        {{ form_widget(form.client.nom, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.client.prenom) }}
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.client.prenom.vars.label }}</label>
-                        {{ form_widget(form.client.prenom, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.client.prenom) }}
-                    </div>
+            <div class="row g-3">
+                <div class="col-md-6">
+                    {{ form_row(form.client.nom) }}
                 </div>
-                <div class="row g-3 mt-2">
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.client.telephone.vars.label }}</label>
-                        {{ form_widget(form.client.telephone, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.client.telephone) }}
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.client.mail.vars.label }}</label>
-                        {{ form_widget(form.client.mail, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.client.mail) }}
-                    </div>
+                <div class="col-md-6">
+                    {{ form_row(form.client.prenom) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.client.telephone) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.client.mail) }}
                 </div>
             </div>
         </div>
     </div>
 
+    {# Section Chantier #}
     <div class="card mb-4">
         <div class="card-header bg-primary text-white">
             <h3 class="mb-0"><i class="bi bi-building"></i> Informations du chantier</h3>
@@ -49,240 +39,113 @@
         <div class="card-body">
             <div class="row g-3">
                 <div class="col-md-12">
-                    <label class="form-label fw-bold">{{ form.adresse.vars.label }}</label>
-                    {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.adresse) }}
+                    {{ form_row(form.adresse) }}
                 </div>
-            </div>
-            <div class="row g-3 mt-2">
                 <div class="col-md-4">
-                    <label class="form-label fw-bold">{{ form.copos.vars.label }}</label>
-                    {{ form_widget(form.copos, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.copos) }}
+                    {{ form_row(form.copos) }}
                 </div>
                 <div class="col-md-8">
-                    <label class="form-label fw-bold">{{ form.ville.vars.label }}</label>
-                    {{ form_widget(form.ville, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.ville) }}
-                </div>
-            </div>
-            <div class="row g-3 mt-2">
-                <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.datePrevue.vars.label }}</label>
-                    {{ form_widget(form.datePrevue, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.datePrevue) }}
+                    {{ form_row(form.ville) }}
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.dateDemarrage.vars.label }}</label>
-                    {{ form_widget(form.dateDemarrage, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.dateDemarrage) }}
-                </div>
-            </div>
-            <div class="row g-3 mt-2">
-                <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.dateFin.vars.label }}</label>
-                    {{ form_widget(form.dateFin, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.dateFin) }}
+                    {{ form_row(form.datePrevue) }}
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.dateReception.vars.label }}</label>
-                    {{ form_widget(form.dateReception, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.dateReception) }}
-                </div>
-            </div>
-            <div class="row g-3 mt-2">
-                <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.distanceDepot.vars.label }}</label>
-                    {{ form_widget(form.distanceDepot, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.distanceDepot) }}
+                    {{ form_row(form.dateDemarrage) }}
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.tempsTrajet.vars.label }}</label>
-                    {{ form_widget(form.tempsTrajet, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.tempsTrajet) }}
-                </div>
-            </div>
-            <div class="row g-3 mt-2">
-                <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.surfaceMaison.vars.label }}</label>
-                    {{ form_widget(form.surfaceMaison, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.surfaceMaison) }}
+                    {{ form_row(form.dateFin) }}
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">{{ form.surfaceCombles.vars.label }}</label>
-                    {{ form_widget(form.surfaceCombles, {'attr': {'class': 'form-control'}}) }}
-                    {{ form_errors(form.surfaceCombles) }}
+                    {{ form_row(form.dateReception) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.distanceDepot) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.tempsTrajet) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.surfaceMaison) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.surfaceCombles) }}
                 </div>
             </div>
         </div>
     </div>
 
+    {# Section Postes et Étapes #}
     <div class="card mb-4">
         <div class="card-header bg-success text-white">
-            <h3 class="mb-0"><i class="bi bi-check2-square"></i> Étapes par poste</h3>
+            <h3 class="mb-0"><i class="bi bi-check2-square"></i> Postes et étapes</h3>
         </div>
         <div class="card-body">
-            {% set current_poste_id = null %}
-            {% set etapes_array = [] %}
-
-            {# Collecter toutes les étapes par poste #}
-            {% for child in form.children %}
-                {% if child.vars.name starts with 'etape_' %}
-                    {% set poste_id = child.vars.attr['data-poste-id'] ?? '' %}
-                    {% set poste_nom = child.vars.attr['data-poste-nom'] ?? '' %}
-
-                    {% if poste_id != current_poste_id %}
-                        {# Afficher le poste précédent s'il existe #}
-                        {% if current_poste_id is not null and etapes_array|length > 0 %}
-                            {# Afficher les étapes par paires #}
-                            {% for i in 0..(etapes_array|length - 1) %}
-                                {% if i % 2 == 0 %}
-                                    <div class="row mb-3 align-items-center">
-                                        {# Première étape de la paire #}
-                                        {% set etape1 = etapes_array[i] %}
-                                        <div class="col-md-6">
-                                            <div class="etape-inline">
-                                                <label class="etape-label">{{ etape1.vars.label }}</label>
-                                                <div class="etape-radios">
-                                                    {% if etape1.vars.block_prefixes[1] == 'choice' %}
-                                                        {% for choice in etape1.vars.choices %}
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="radio"
-                                                                       id="{{ etape1.vars.id }}_{{ loop.index0 }}"
-                                                                       name="{{ etape1.vars.full_name }}"
-                                                                       value="{{ choice.value }}"
-                                                                       class="form-check-input"
-                                                                       {% if choice.value == '' %}checked{% endif %}>
-                                                                <label class="form-check-label" for="{{ etape1.vars.id }}_{{ loop.index0 }}">
-                                                                    {{ choice.label }}
-                                                                </label>
-                                                            </div>
-                                                        {% endfor %}
-                                                    {% else %}
-                                                        {{ form_widget(etape1, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {# Deuxième étape de la paire si elle existe #}
-                                        {% if etapes_array[i + 1] is defined %}
-                                            {% set etape2 = etapes_array[i + 1] %}
-                                            <div class="col-md-6">
-                                                <div class="etape-inline">
-                                                    <label class="etape-label">{{ etape2.vars.label }}</label>
-                                                    <div class="etape-radios">
-                                                        {% if etape2.vars.block_prefixes[1] == 'choice' %}
-                                                            {% for choice in etape2.vars.choices %}
-                                                                <div class="form-check form-check-inline">
-                                                                    <input type="radio"
-                                                                           id="{{ etape2.vars.id }}_{{ loop.index0 }}"
-                                                                           name="{{ etape2.vars.full_name }}"
-                                                                           value="{{ choice.value }}"
-                                                                           class="form-check-input"
-                                                                           {% if choice.value == '' %}checked{% endif %}>
-                                                                    <label class="form-check-label" for="{{ etape2.vars.id }}_{{ loop.index0 }}">
-                                                                        {{ choice.label }}
-                                                                    </label>
-                                                                </div>
-                                                            {% endfor %}
-                                                        {% else %}
-                                                            {{ form_widget(etape2, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                            </div> {# Fermer poste-section #}
-                        {% endif %}
-
-                        {# Nouveau poste #}
-                        {% set current_poste_id = poste_id %}
-                        {% set etapes_array = [] %}
-
-                        <div class="poste-section mb-4">
-                            <h4 class="border-bottom pb-2 mb-3">
-                                <i class="bi bi-folder"></i> {{ poste_nom }}
+            {% for poste in postes %}
+                <div class="poste-section mb-4">
+                    {# En-tête du poste avec montants HT et TTC #}
+                    <div class="poste-header">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">
+                                <i class="bi bi-folder"></i> {{ poste.libelle }}
                             </h4>
-                    {% endif %}
-
-                    {# Ajouter l'étape au tableau du poste courant #}
-                    {% set etapes_array = etapes_array|merge([child]) %}
-                {% endif %}
-            {% endfor %}
-
-            {# Afficher le dernier poste #}
-            {% if etapes_array|length > 0 %}
-                {% for i in 0..(etapes_array|length - 1) %}
-                    {% if i % 2 == 0 %}
-                        <div class="row mb-3 align-items-center">
-                            {# Première étape de la paire #}
-                            {% set etape1 = etapes_array[i] %}
-                            <div class="col-md-6">
-                                <div class="etape-inline">
-                                    <label class="etape-label">{{ etape1.vars.label }}</label>
-                                    <div class="etape-radios">
-                                        {% if etape1.vars.block_prefixes[1] == 'choice' %}
-                                            {% for choice in etape1.vars.choices %}
-                                                <div class="form-check form-check-inline">
-                                                    <input type="radio"
-                                                           id="{{ etape1.vars.id }}_{{ loop.index0 }}"
-                                                           name="{{ etape1.vars.full_name }}"
-                                                           value="{{ choice.value }}"
-                                                           class="form-check-input"
-                                                           {% if choice.value == '' %}checked{% endif %}>
-                                                    <label class="form-check-label" for="{{ etape1.vars.id }}_{{ loop.index0 }}">
-                                                        {{ choice.label }}
-                                                    </label>
-                                                </div>
-                                            {% endfor %}
-                                        {% else %}
-                                            {{ form_widget(etape1, {'attr': {'class': 'form-control form-control-sm'}}) }}
-                                        {% endif %}
-                                    </div>
+                            <div class="poste-montants d-flex gap-3">
+                                <div class="montant-field">
+                                    {{ form_label(form['poste_' ~ poste.id ~ '_montantHT']) }}
+                                    {{ form_widget(form['poste_' ~ poste.id ~ '_montantHT']) }}
+                                </div>
+                                <div class="montant-field">
+                                    {{ form_label(form['poste_' ~ poste.id ~ '_montantTTC']) }}
+                                    {{ form_widget(form['poste_' ~ poste.id ~ '_montantTTC']) }}
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            {# Deuxième étape de la paire si elle existe #}
-                            {% if etapes_array[i + 1] is defined %}
-                                {% set etape2 = etapes_array[i + 1] %}
-                                <div class="col-md-6">
-                                    <div class="etape-inline">
-                                        <label class="etape-label">{{ etape2.vars.label }}</label>
-                                        <div class="etape-radios">
-                                            {% if etape2.vars.block_prefixes[1] == 'choice' %}
-                                                {% for choice in etape2.vars.choices %}
-                                                    <div class="form-check form-check-inline">
-                                                        <input type="radio"
-                                                               id="{{ etape2.vars.id }}_{{ loop.index0 }}"
-                                                               name="{{ etape2.vars.full_name }}"
-                                                               value="{{ choice.value }}"
-                                                               class="form-check-input"
-                                                               {% if choice.value == '' %}checked{% endif %}>
-                                                        <label class="form-check-label" for="{{ etape2.vars.id }}_{{ loop.index0 }}">
-                                                            {{ choice.label }}
-                                                        </label>
-                                                    </div>
-                                                {% endfor %}
+                    {# Étapes du poste #}
+                    <div class="etapes-grid">
+                        {% for etape in poste.etapes %}
+                            {% if etape.archive == 0 %}
+                                {% set fieldName = 'etape_' ~ etape.id %}
+                                {% if form[fieldName] is defined %}
+                                    <div class="etape-field">
+                                        <label class="etape-label">{{ etape.libelle }}</label>
+                                        <div class="etape-input">
+                                            {% set etapeFormat = etape.etapeFormat %}
+
+                                            {# Format 1: Oui/Non/Sans objet - Radio buttons #}
+                                            {% if etapeFormat and etapeFormat.id == 1 %}
+                                                {{ form_widget(form[fieldName]) }}
+
+                                            {# Format 2: Date #}
+                                            {% elseif etapeFormat and etapeFormat.id == 2 %}
+                                                {{ form_widget(form[fieldName], {'attr': {'class': 'form-control'}}) }}
+
+                                            {# Format 3: Date et heure #}
+                                            {% elseif etapeFormat and etapeFormat.id == 3 %}
+                                                {{ form_widget(form[fieldName], {'attr': {'class': 'form-control'}}) }}
+
+                                            {# Format 4: Texte #}
+                                            {% elseif etapeFormat and etapeFormat.id == 4 %}
+                                                {{ form_widget(form[fieldName], {'attr': {'class': 'form-control'}}) }}
+
+                                            {# Par défaut: texte #}
                                             {% else %}
-                                                {{ form_widget(etape2, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                                                {{ form_widget(form[fieldName], {'attr': {'class': 'form-control'}}) }}
                                             {% endif %}
                                         </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             {% endif %}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-                </div> {# Fermer poste-section #}
-            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 
-    <div class="d-flex justify-content-between">
+    {# Boutons d'action #}
+    <div class="d-flex justify-content-between mb-5">
         <a href="{{ path('app_chantier_index') }}" class="btn btn-secondary btn-lg">
             <i class="bi bi-arrow-left"></i> Annuler
         </a>
@@ -291,35 +154,101 @@
         </button>
     </div>
 
-    {{ form_end(form) }}
+    {# Ne pas afficher les champs restants automatiquement #}
+    {{ form_widget(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
 </div>
 
 <style>
+    /* Styles de base */
+    .card {
+        border: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        border-radius: 8px;
+    }
+
+    .card-header {
+        border-bottom: none;
+        padding: 1rem 1.5rem;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .card-header h3 {
+        font-size: 1.25rem;
+        margin: 0;
+    }
+
+    .card-header i {
+        margin-right: 8px;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    /* Section poste */
     .poste-section {
         background-color: #f8f9fa;
         padding: 20px;
         border-radius: 8px;
         border-left: 4px solid #28a745;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
-    .poste-section h4 {
+    .poste-header h4 {
         color: #28a745;
         font-weight: 600;
         font-size: 1.2rem;
     }
 
-    .etape-inline {
-        display: flex;
-        align-items: center;
-        background-color: white;
-        padding: 10px 15px;
-        border-radius: 6px;
-        border: 1px solid #dee2e6;
-        min-height: 50px;
+    .poste-header {
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
     }
 
-    .etape-inline:hover {
+    /* Montants HT et TTC */
+    .poste-montants {
+        display: flex;
+        align-items: center;
+    }
+
+    .montant-field {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .montant-field label {
+        margin: 0;
+        font-weight: 600;
+        color: #495057;
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+
+    .montant-field input {
+        width: 130px;
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    /* Grille des étapes */
+    .etapes-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .etape-field {
+        background-color: white;
+        padding: 15px;
+        border-radius: 6px;
+        border: 1px solid #dee2e6;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .etape-field:hover {
         border-color: #28a745;
         box-shadow: 0 2px 4px rgba(40,167,69,0.1);
     }
@@ -327,21 +256,19 @@
     .etape-label {
         font-weight: 600;
         color: #495057;
-        margin: 0;
-        min-width: 140px;
-        flex-shrink: 0;
+        margin-bottom: 10px;
         font-size: 0.95rem;
     }
 
-    .etape-radios {
-        display: flex;
-        gap: 15px;
-        flex-grow: 1;
-        margin-left: 15px;
+    .etape-input {
+        flex: 1;
     }
 
-    .form-check-inline {
-        margin: 0;
+    /* Radio buttons pour Oui/Non/Sans objet */
+    .etape-input .form-check {
+        display: inline-block;
+        margin-right: 15px;
+        margin-bottom: 5px;
     }
 
     .form-check-input {
@@ -361,42 +288,7 @@
         font-weight: 500;
     }
 
-    .nouveau-client-section {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        border: 2px solid #e9ecef;
-    }
-
-    .card {
-        border: none;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    .card-header {
-        border-bottom: none;
-        padding: 1rem 1.5rem;
-    }
-
-    .card-header h3 {
-        font-size: 1.25rem;
-        margin: 0;
-    }
-
-    .card-header i {
-        margin-right: 8px;
-    }
-
-    .card-body {
-        padding: 1.5rem;
-    }
-
-    .form-label {
-        margin-bottom: 0.5rem;
-        color: #495057;
-        font-size: 0.95rem;
-    }
-
+    /* Champs de formulaire */
     .form-control {
         border: 1px solid #ced4da;
         border-radius: 0.375rem;
@@ -409,11 +301,7 @@
         box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
     }
 
-    .form-control-sm {
-        padding: 0.375rem 0.5rem;
-        font-size: 0.875rem;
-    }
-
+    /* Boutons */
     .btn-lg {
         padding: 0.75rem 1.5rem;
         font-size: 1.1rem;
@@ -421,60 +309,43 @@
         font-weight: 500;
     }
 
-    .btn-primary {
-        background-color: #007bff;
-        border-color: #007bff;
+    .btn i {
+        margin-right: 6px;
     }
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border-color: #6c757d;
-    }
-
-    .btn-secondary:hover {
-        background-color: #5a6268;
-        border-color: #545b62;
-    }
-
-    .fw-bold {
-        font-weight: 600 !important;
-    }
-
+    /* Espacement */
     .g-3 {
         --bs-gutter-x: 1rem;
         --bs-gutter-y: 1rem;
     }
-</style>
 
-<script>
-    // Gérer l'affichage conditionnel du formulaire nouveau client
-    document.addEventListener('DOMContentLoaded', function() {
-        const clientSelect = document.querySelector('select[name*="[client]"]');
-        const nouveauClientSection = document.querySelector('.nouveau-client-section');
+    .gap-3 {
+        gap: 1rem !important;
+    }
 
-        if (clientSelect && nouveauClientSection) {
-            function toggleNouveauClient() {
-                if (clientSelect.value) {
-                    nouveauClientSection.style.opacity = '0.5';
-                    nouveauClientSection.querySelectorAll('input').forEach(input => {
-                        input.disabled = true;
-                    });
-                } else {
-                    nouveauClientSection.style.opacity = '1';
-                    nouveauClientSection.querySelectorAll('input').forEach(input => {
-                        input.disabled = false;
-                    });
-                }
-            }
-
-            clientSelect.addEventListener('change', toggleNouveauClient);
-            toggleNouveauClient();
+    /* Responsive */
+    @media (max-width: 768px) {
+        .etapes-grid {
+            grid-template-columns: 1fr;
         }
-    });
-</script>
+
+        .poste-header .d-flex {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+        }
+
+        .poste-montants {
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .montant-field {
+            flex: 1;
+        }
+
+        .montant-field input {
+            width: 100%;
+        }
+    }
+</style>
 {% endblock %}

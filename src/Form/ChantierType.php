@@ -109,6 +109,30 @@ class ChantierType extends AbstractType
             $postes = $this->posteRepository->findBy(['archive' => 0], ['ordre' => 'ASC']);
 
             foreach ($postes as $poste) {
+
+               $form->add('poste_'.$poste->getId().'_montantHT', NumberType::class, [
+    'mapped' => false,
+    'required' => false,
+    'label' => 'HT',
+    'attr' => [
+        'class' => 'form-control form-control-sm',
+        'data-poste-id' => $poste->getId(),
+    ],
+]);
+               $form->add('poste_'.$poste->getId().'_montantTTC', NumberType::class, [
+    'mapped' => false,
+    'required' => false,
+    'label' => 'TTC',
+    'attr' => [
+        'class' => 'form-control form-control-sm',
+        'data-poste-id' => $poste->getId(),
+    ],
+]);
+
+
+
+
+
                 // Récupérer toutes les étapes du poste non archivées
                 $etapes = $this->etapeRepository->findBy([
                     'poste' => $poste,

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Chantier;
 use App\Entity\Client;
 use App\Entity\ChantierEtape;
+use App\Entity\ChantierPoste;
 use App\Form\ChantierType;
 use App\Repository\ChantierRepository;
 use App\Repository\EtapeRepository;
@@ -34,21 +35,33 @@ final class ChantierController extends AbstractController
         PosteRepository $posteRepository
     ): Response {
         $chantier = new Chantier();
-        $chantier->setClient(new Client()); // Création du client
+        $chantier->setClient(new Client());
         $chantier->setArchive(0);
 
         $form = $this->createForm(ChantierType::class, $chantier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            // Persister le chantier
             $entityManager->persist($chantier);
 
-            // Traiter les étapes
             $postes = $posteRepository->findBy(['archive' => 0], ['ordre' => 'ASC']);
 
             foreach ($postes as $poste) {
+                // Traiter les montants HT et TTC du poste
+                $montantHT = $form->get('poste_' . $poste->getId() . '_montantHT')->getData();
+                $montantTTC = $form->get('poste_' . $poste->getId() . '_montantTTC')->getData();
+
+                // Créer ChantierPoste seulement si au moins un montant est renseigné
+                if ($montantHT !== null || $montantTTC !== null) {
+                    $chantierPoste = new ChantierPoste();
+                    $chantierPoste->setChantier($chantier);
+                    $chantierPoste->setPoste($poste);
+                    $chantierPoste->setMontantHT($montantHT);
+                    $chantierPoste->setMontantTTC($montantTTC);
+                    $entityManager->persist($chantierPoste);
+                }
+
+                // Traiter les étapes du poste
                 $etapes = $etapeRepository->findBy([
                     'poste' => $poste,
                     'archive' => 0
@@ -60,14 +73,11 @@ final class ChantierController extends AbstractController
                     if ($form->has($fieldName)) {
                         $value = $form->get($fieldName)->getData();
 
-                        // Ne créer une ChantierEtape que si une valeur a été saisie
                         if ($value !== null && $value !== '') {
                             $chantierEtape = new ChantierEtape();
                             $chantierEtape->setChantier($chantier);
                             $chantierEtape->setEtape($etape);
 
-
-                            // Définir la valeur selon le type d'EtapeFormat
                             $etapeFormat = $etape->getEtapeFormat();
                             if ($etapeFormat) {
                                 $this->setChantierEtapeValue($chantierEtape, $etapeFormat->getId(), $value);
@@ -97,33 +107,9 @@ final class ChantierController extends AbstractController
     #[Route('/{id}', name: 'app_chantier_show', methods: ['GET'])]
     public function show(Chantier $chantier): Response
     {
-
-         return $this->render('chantier/show2.html.twig', [
-        'chantier' => $chantier,
-    ]);
-
-        /* Organiser les étapes par poste
-        $etapesParPoste = [];
-        foreach ($chantier->getChantierEtapes() as $chantierEtape) {
-            $posteId = $chantierEtape->getPoste()->getId();
-            if (!isset($etapesParPoste[$posteId])) {
-                $etapesParPoste[$posteId] = [
-                    'poste' => $chantierEtape->getPoste(),
-                    'etapes' => []
-                ];
-            }
-            $etapesParPoste[$posteId]['etapes'][] = $chantierEtape;
-        }
-
-        // Trier par ordre des postes
-        uasort($etapesParPoste, function($a, $b) {
-            return $a['poste']->getOrdre() <=> $b['poste']->getOrdre();
-        });
-
         return $this->render('chantier/show.html.twig', [
             'chantier' => $chantier,
-            'etapesParPoste' => $etapesParPoste,
-        ]);*/
+        ]);
     }
 
     #[Route('/{id}/edit', name: 'app_chantier_edit', methods: ['GET', 'POST'])]
@@ -136,34 +122,36 @@ final class ChantierController extends AbstractController
     ): Response {
         $form = $this->createForm(ChantierType::class, $chantier);
 
+        // Pré-remplir les montants des postes
+        foreach ($chantier->getChantierPostes() as $chantierPoste) {
+            $posteId = $chantierPoste->getPoste()->getId();
+            $form->get('poste_' . $posteId . '_montantHT')->setData($chantierPoste->getMontantHT());
+            $form->get('poste_' . $posteId . '_montantTTC')->setData($chantierPoste->getMontantTTC());
+        }
+
         // Pré-remplir les valeurs des étapes existantes
-        $etapesExistantes = [];
         foreach ($chantier->getChantierEtapes() as $chantierEtape) {
             $etapeId = $chantierEtape->getEtape()->getId();
-            $etapesExistantes[$etapeId] = $chantierEtape;
-
-            // Pré-remplir le formulaire avec les valeurs existantes
             $fieldName = 'etape_' . $etapeId;
+
             if ($form->has($fieldName)) {
                 $etapeFormat = $chantierEtape->getEtape()->getEtapeFormat();
                 $value = null;
 
                 if ($etapeFormat) {
                     switch ($etapeFormat->getId()) {
-                        case 1: // Oui, non, sans objet
-                            if ($chantierEtape->isValBoolean() !== null) {
-                                $value = $chantierEtape->isValBoolean() ? 'oui' : 'non';
-                            } else {
-                                $value = 'sans_objet';
-                            }
+                        case 1:
+                            $value = $chantierEtape->isValBoolean() !== null
+                                ? ($chantierEtape->isValBoolean() ? 'oui' : 'non')
+                                : 'sans_objet';
                             break;
-                        case 2: // Date
+                        case 2:
                             $value = $chantierEtape->getValDate();
                             break;
-                        case 3: // Date et heure
+                        case 3:
                             $value = $chantierEtape->getValDateHeure();
                             break;
-                        case 4: // Texte
+                        case 4:
                             $value = $chantierEtape->getValText();
                             break;
                     }
@@ -178,16 +166,34 @@ final class ChantierController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Supprimer les anciens ChantierPoste
+            foreach ($chantier->getChantierPostes() as $chantierPoste) {
+                $entityManager->remove($chantierPoste);
+            }
+
             // Supprimer les anciennes étapes
             foreach ($chantier->getChantierEtapes() as $chantierEtape) {
                 $entityManager->remove($chantierEtape);
             }
             $entityManager->flush();
 
-            // Traiter les étapes mises à jour
             $postes = $posteRepository->findBy(['archive' => 0], ['ordre' => 'ASC']);
 
             foreach ($postes as $poste) {
+                // Traiter les montants
+                $montantHT = $form->get('poste_' . $poste->getId() . '_montantHT')->getData();
+                $montantTTC = $form->get('poste_' . $poste->getId() . '_montantTTC')->getData();
+
+                if ($montantHT !== null || $montantTTC !== null) {
+                    $chantierPoste = new ChantierPoste();
+                    $chantierPoste->setChantier($chantier);
+                    $chantierPoste->setPoste($poste);
+                    $chantierPoste->setMontantHT($montantHT);
+                    $chantierPoste->setMontantTTC($montantTTC);
+                    $entityManager->persist($chantierPoste);
+                }
+
+                // Traiter les étapes
                 $etapes = $etapeRepository->findBy([
                     'poste' => $poste,
                     'archive' => 0
@@ -203,7 +209,6 @@ final class ChantierController extends AbstractController
                             $chantierEtape = new ChantierEtape();
                             $chantierEtape->setChantier($chantier);
                             $chantierEtape->setEtape($etape);
-                            $chantierEtape->setPoste($poste);
 
                             $etapeFormat = $etape->getEtapeFormat();
                             if ($etapeFormat) {
@@ -228,7 +233,6 @@ final class ChantierController extends AbstractController
             'chantier' => $chantier,
             'form' => $form,
             'postes' => $posteRepository->findBy(['archive' => 0], ['ordre' => 'ASC']),
-            'etapesExistantes' => $etapesExistantes,
         ]);
     }
 
@@ -245,16 +249,13 @@ final class ChantierController extends AbstractController
         return $this->redirectToRoute('app_chantier_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    /**
-     * Définir la valeur dans ChantierEtape selon le type d'EtapeFormat
-     */
     private function setChantierEtapeValue(ChantierEtape $chantierEtape, int $etapeFormatId, mixed $value): void
     {
         match ($etapeFormatId) {
-            1 => $chantierEtape->setValBoolean($value === 'oui'),  // Oui, non, sans objet
-            2 => $chantierEtape->setValDate($value),               // Date
-            3 => $chantierEtape->setValDateHeure($value),          // Date et heure
-            4 => $chantierEtape->setValText((string)$value),       // Texte
+            1 => $chantierEtape->setValBoolean($value === 'oui'),
+            2 => $chantierEtape->setValDate($value),
+            3 => $chantierEtape->setValDateHeure($value),
+            4 => $chantierEtape->setValText((string)$value),
             default => $chantierEtape->setValText((string)$value),
         };
     }
