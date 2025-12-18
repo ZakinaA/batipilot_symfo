@@ -52,7 +52,9 @@ class Chantier
     #[ORM\Column]
     private ?int $archive = null;
 
-    #[ORM\ManyToOne(inversedBy: 'chantiers')]
+    #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'chantiers')]
+    //#[ORM\JoinColumn(nullable: false)]
+    //#[ORM\ManyToOne(inversedBy: 'chantiers')]
     private ?Client $client = null;
 
     /**
@@ -61,9 +63,18 @@ class Chantier
     #[ORM\OneToMany(targetEntity: ChantierEtape::class, mappedBy: 'chantier')]
     private Collection $chantierEtapes;
 
+    /**
+     * @var Collection<int, ChantierPoste>
+     */
+    #[ORM\OneToMany(targetEntity: ChantierPoste::class, mappedBy: 'chantier')]
+    private Collection $chantierPostes;
+
+
     public function __construct()
     {
         $this->chantierEtapes = new ArrayCollection();
+        $this->chantierPostes = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -256,4 +267,36 @@ class Chantier
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, ChantierPoste>
+     */
+    public function getChantierPostes(): Collection
+    {
+        return $this->chantierPostes;
+    }
+
+    public function addChantierPoste(ChantierPoste $chantierPoste): static
+    {
+        if (!$this->chantierPostes->contains($chantierPoste)) {
+            $this->chantierPostes->add($chantierPoste);
+            $chantierPoste->setChantier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChantierPoste(ChantierPoste $chantierPoste): static
+    {
+        if ($this->chantierPostes->removeElement($chantierPoste)) {
+            // set the owning side to null (unless already changed)
+            if ($chantierPoste->getChantier() === $this) {
+                $chantierPoste->setChantier(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

@@ -34,36 +34,13 @@ final class ChantierController extends AbstractController
         PosteRepository $posteRepository
     ): Response {
         $chantier = new Chantier();
+        $chantier->setClient(new Client()); // Création du client
         $chantier->setArchive(0);
 
         $form = $this->createForm(ChantierType::class, $chantier);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Gérer le client (existant ou nouveau)
-            $client = $form->get('client')->getData();
-
-            if (!$client) {
-                // Créer un nouveau client
-                $nom = $form->get('nouveauClientNom')->getData();
-                $prenom = $form->get('nouveauClientPrenom')->getData();
-                $telephone = $form->get('nouveauClientTelephone')->getData();
-                $mail = $form->get('nouveauClientMail')->getData();
-
-                if ($nom) {
-                    $client = new Client();
-                    $client->setNom($nom)
-                           ->setPrenom($prenom)
-                           ->setTelephone($telephone)
-                           ->setMail($mail);
-
-                    $entityManager->persist($client);
-                }
-            }
-
-            if ($client) {
-                $chantier->setClient($client);
-            }
 
             // Persister le chantier
             $entityManager->persist($chantier);
@@ -120,7 +97,12 @@ final class ChantierController extends AbstractController
     #[Route('/{id}', name: 'app_chantier_show', methods: ['GET'])]
     public function show(Chantier $chantier): Response
     {
-        // Organiser les étapes par poste
+
+         return $this->render('chantier/show2.html.twig', [
+        'chantier' => $chantier,
+    ]);
+
+        /* Organiser les étapes par poste
         $etapesParPoste = [];
         foreach ($chantier->getChantierEtapes() as $chantierEtape) {
             $posteId = $chantierEtape->getPoste()->getId();
@@ -141,7 +123,7 @@ final class ChantierController extends AbstractController
         return $this->render('chantier/show.html.twig', [
             'chantier' => $chantier,
             'etapesParPoste' => $etapesParPoste,
-        ]);
+        ]);*/
     }
 
     #[Route('/{id}/edit', name: 'app_chantier_edit', methods: ['GET', 'POST'])]

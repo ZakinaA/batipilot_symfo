@@ -16,26 +16,26 @@
             <div class="nouveau-client-section">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.nouveauClientNom.vars.label }}</label>
-                        {{ form_widget(form.nouveauClientNom, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.nouveauClientNom) }}
+                        <label class="form-label fw-bold">{{ form.client.nom.vars.label }}</label>
+                        {{ form_widget(form.client.nom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.client.prenom) }}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.nouveauClientPrenom.vars.label }}</label>
-                        {{ form_widget(form.nouveauClientPrenom, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.nouveauClientPrenom) }}
+                        <label class="form-label fw-bold">{{ form.client.prenom.vars.label }}</label>
+                        {{ form_widget(form.client.prenom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.client.prenom) }}
                     </div>
                 </div>
                 <div class="row g-3 mt-2">
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.nouveauClientTelephone.vars.label }}</label>
-                        {{ form_widget(form.nouveauClientTelephone, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.nouveauClientTelephone) }}
+                        <label class="form-label fw-bold">{{ form.client.telephone.vars.label }}</label>
+                        {{ form_widget(form.client.telephone, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.client.telephone) }}
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">{{ form.nouveauClientMail.vars.label }}</label>
-                        {{ form_widget(form.nouveauClientMail, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.nouveauClientMail) }}
+                        <label class="form-label fw-bold">{{ form.client.mail.vars.label }}</label>
+                        {{ form_widget(form.client.mail, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.client.mail) }}
                     </div>
                 </div>
             </div>

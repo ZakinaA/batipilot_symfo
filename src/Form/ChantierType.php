@@ -35,6 +35,9 @@ class ChantierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('client', ClientType::class, [
+                'label' => false
+            ])
             // Informations du chantier
             ->add('adresse', TextType::class, [
                 'label' => 'Adresse',
@@ -94,43 +97,9 @@ class ChantierType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'form-control']
             ])
+            ;
 
-            /* Sélection ou création du client
-            ->add('client', EntityType::class, [
-                'class' => Client::class,
-                'choice_label' => function(Client $client) {
-                    return $client->getNom() . ' ' . $client->getPrenom();
-                },
-                'placeholder' => 'Sélectionner un client existant',
-                'required' => false,
-                'attr' => ['class' => 'form-control']
-            ])*/
 
-            // Informations du nouveau client
-            ->add('nouveauClientNom', TextType::class, [
-                'label' => 'Nom du nouveau client',
-                'mapped' => false,
-                'required' => false,
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('nouveauClientPrenom', TextType::class, [
-                'label' => 'Prénom du nouveau client',
-                'mapped' => false,
-                'required' => false,
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('nouveauClientTelephone', TelType::class, [
-                'label' => 'Téléphone du nouveau client',
-                'mapped' => false,
-                'required' => false,
-                'attr' => ['class' => 'form-control']
-            ])
-            ->add('nouveauClientMail', EmailType::class, [
-                'label' => 'Email du nouveau client',
-                'mapped' => false,
-                'required' => false,
-                'attr' => ['class' => 'form-control']
-            ]);
 
         // Ajout dynamique des étapes par poste
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -168,7 +137,6 @@ class ChantierType extends AbstractType
                     // Options spécifiques selon le type
                     if ($formType === ChoiceType::class) {
                         $options['choices'] = [
-                            'Choisir' => '',
                             'Oui' => 'oui',
                             'Non' => 'non',
                             'Sans objet' => 'sans_objet'
