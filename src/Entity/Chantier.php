@@ -69,6 +69,10 @@ class Chantier
     #[ORM\OneToMany(targetEntity: ChantierPoste::class, mappedBy: 'chantier')]
     private Collection $chantierPostes;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Statut $statut = null;
+
 
     public function __construct()
     {
@@ -294,6 +298,18 @@ class Chantier
                 $chantierPoste->setChantier(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStatut(): ?Statut
+    {
+        return $this->statut;
+    }
+
+    public function setStatut(?Statut $statut): static
+    {
+        $this->statut = $statut;
 
         return $this;
     }

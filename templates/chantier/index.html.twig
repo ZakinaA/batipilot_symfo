@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-        {% for chantier in chantiers %}
+        {% for chantier in chantiers_demarres %}
             <tr>
                 <td>{{ chantier.id }}</td>
                 <td>{{ chantier.adresse }}</td>
@@ -39,7 +39,7 @@
                 <td>{{ chantier.tempsTrajet }}</td>
                 <td>{{ chantier.surfaceMaison }}</td>
                 <td>{{ chantier.surfaceCombles }}</td>
-                <td>{{ chantier.archive }}</td>
+
                 <td>
                     <a href="{{ path('app_chantier_show', {'id': chantier.id}) }}">show</a>
                     <a href="{{ path('app_chantier_edit', {'id': chantier.id}) }}">edit</a>

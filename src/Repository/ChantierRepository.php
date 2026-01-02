@@ -16,6 +16,16 @@ class ChantierRepository extends ServiceEntityRepository
         parent::__construct($registry, Chantier::class);
     }
 
+    public function findChantiersByStatutId(int $statutId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.statut', 's')
+            ->where('s.id = :statutId')
+            ->setParameter('statutId', $statutId)
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Chantier[] Returns an array of Chantier objects
     //     */
