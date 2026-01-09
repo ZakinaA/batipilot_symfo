@@ -3,39 +3,24 @@
 {% block title %}Poste index{% endblock %}
 
 {% block body %}
-    <h1>Poste index</h1>
+    <div class="dashboard">
+   
+    <div class="top-bar">
+        <h1>Postes</h1>
+        <a href="{{ path('app_poste_new') }}" class="btn-add">+ Nouveau Postes</a>
+    </div>
+    {% for poste in postes %}
+        <div class="posts-list">
+            <a href="{{ path('app_poste_show', {'id': poste.id}) }}" class="post-link">
+                <div class="form-check-label">
+                    <div class="post-card">
+                        {{ poste.libelle }}
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>Ordre</th>
-                <th>Tva</th>
-                <th>Archive</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for poste in postes %}
-            <tr>
-                <td>{{ poste.id }}</td>
-                <td>{{ poste.libelle }}</td>
-                <td>{{ poste.ordre }}</td>
-                <td>{{ poste.tva }}</td>
-                <td>{{ poste.archive }}</td>
-                <td>
-                    <a href="{{ path('app_poste_show', {'id': poste.id}) }}">show</a>
-                    <a href="{{ path('app_poste_edit', {'id': poste.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_poste_new') }}">Create new</a>
+       
 {% endblock %}
+

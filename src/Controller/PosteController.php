@@ -21,7 +21,7 @@ final class PosteController extends AbstractController
             'postes' => $posteRepository->findAll(),
         ]);
     }
-
+    
     #[Route('/new', name: 'app_poste_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
