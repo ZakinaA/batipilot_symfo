@@ -1,34 +1,76 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Etape{% endblock %}
+{% block title %}Étape – {{ etape.libelle }}{% endblock %}
 
 {% block body %}
-    <h1>Etape</h1>
+<div class="container">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ etape.id }}</td>
-            </tr>
-            <tr>
-                <th>Libelle</th>
-                <td>{{ etape.libelle }}</td>
-            </tr>
-            <tr>
-                <th>Display_field</th>
-                <td>{{ etape.displayField }}</td>
-            </tr>
-            <tr>
-                <th>Archive</th>
-                <td>{{ etape.archive }}</td>
-            </tr>
-        </tbody>
-    </table>
+    {# ================= HEADER ================= #}
+    <div class="header-fiche">
+        <h1>Étape : {{ etape.libelle }}</h1>
 
-    <a href="{{ path('app_etape_index') }}">back to list</a>
+        <div>
+            <a href="{{ path('app_etape_edit', {'id': etape.id}) }}" class="btn-back">
+                Modifier
+            </a>
+            <a href="{{ path('app_etape_index') }}" class="btn-back">
+                ← Retour
+            </a>
+        </div>
+    </div>
 
-    <a href="{{ path('app_etape_edit', {'id': etape.id}) }}">edit</a>
+    {# ================= FLASH ================= #}
+    {% for message in app.flashes('success') %}
+        <div class="card" style="border-top-color: var(--success); margin-bottom: 20px;">
+            {{ message }}
+        </div>
+    {% endfor %}
 
-    {{ include('etape/_delete_form.html.twig') }}
+    {# ================= INFOS ÉTAPE ================= #}
+    <div class="grid-info">
+
+        <div class="card">
+            <h2>Informations de l’étape</h2>
+
+            <div class="info-row-grid">
+                <div class="info-col">
+                    <span class="label">Libellé</span>
+                    <span class="value">{{ etape.libelle }}</span>
+                </div>
+
+                <div class="info-col">
+                    <span class="label">Champ d’affichage</span>
+                    <span class="value">{{ etape.displayField ?? '-' }}</span>
+                </div>
+            </div>
+
+            <div class="info-row-grid">
+                <div class="info-col">
+                    <span class="label">Archivée</span>
+                    <span class="value">
+                        {% if etape.archive %}
+                            <span class="badge badge-danger">Oui</span>
+                        {% else %}
+                            <span class="badge badge-ok">Non</span>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    {# ================= SUPPRESSION ================= #}
+    <form method="post"
+          action="{{ path('app_etape_delete', {'id': etape.id}) }}"
+          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette étape ?');"
+          style="margin-top: 30px;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etape.id) }}">
+        <button class="btn-back" style="border-color: var(--danger); color: var(--danger);">
+            Supprimer l’étape
+        </button>
+    </form>
+
+</div>
 {% endblock %}
