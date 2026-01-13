@@ -1,35 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}EtapeFormat index{% endblock %}
+{% block title %}Formats d'étapes{% endblock %}
 
 {% block body %}
-    <h1>EtapeFormat index</h1>
+<div class="dashboard">
+    <div class="top-bar">
+        <h1>Formats d'étapes</h1>
+        <a href="{{ path('app_etape_format_new') }}" class="btn-add">
+            + Nouvelle étape de format
+        </a>
+    </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Libelle</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="white-table">
+        <div class="white-table-header">
+            <div>Type</div>
+        </div>
+
         {% for etape_format in etape_formats %}
-            <tr>
-                <td>{{ etape_format.id }}</td>
-                <td>{{ etape_format.libelle }}</td>
-                <td>
-                    <a href="{{ path('app_etape_format_show', {'id': etape_format.id}) }}">show</a>
-                    <a href="{{ path('app_etape_format_edit', {'id': etape_format.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+            <div class="white-table-row">
+                <div class="white-table-cell">
+                    {{ etape_format.libelle }}
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_etape_format_new') }}">Create new</a>
+    </div>
+</div>
 {% endblock %}
