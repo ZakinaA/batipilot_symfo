@@ -39,12 +39,25 @@ class Poste
     #[ORM\OneToMany(targetEntity: ChantierPoste::class, mappedBy: 'poste')]
     private Collection $chantierPostes;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $equipe = null;
+
+    #[ORM\Column(length: 150, nullable: true)]
+    private ?string $presta = null;
+
+    /**
+     * @var Collection<int, ChantierPresta>
+     */
+    #[ORM\OneToMany(targetEntity: ChantierPresta::class, mappedBy: 'poste')]
+    private Collection $chantierPrestations;
+
 
 
     public function __construct()
     {
         $this->etapes = new ArrayCollection();
         $this->chantierPostes = new ArrayCollection();
+        $this->chantierPrestations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,6 +167,60 @@ class Poste
             // set the owning side to null (unless already changed)
             if ($chantierPoste->getPoste() === $this) {
                 $chantierPoste->setPoste(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getEquipe(): ?string
+    {
+        return $this->equipe;
+    }
+
+    public function setEquipe(?string $equipe): static
+    {
+        $this->equipe = $equipe;
+
+        return $this;
+    }
+
+    public function getPresta(): ?string
+    {
+        return $this->presta;
+    }
+
+    public function setPresta(?string $presta): static
+    {
+        $this->presta = $presta;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ChantierPresta>
+     */
+    public function getChantierPrestations(): Collection
+    {
+        return $this->chantierPrestations;
+    }
+
+    public function addChantierPrestation(ChantierPresta $chantierPrestation): static
+    {
+        if (!$this->chantierPrestations->contains($chantierPrestation)) {
+            $this->chantierPrestations->add($chantierPrestation);
+            $chantierPrestation->setPoste($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChantierPrestation(ChantierPresta $chantierPrestation): static
+    {
+        if ($this->chantierPrestations->removeElement($chantierPrestation)) {
+            // set the owning side to null (unless already changed)
+            if ($chantierPrestation->getPoste() === $this) {
+                $chantierPrestation->setPoste(null);
             }
         }
 

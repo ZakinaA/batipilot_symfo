@@ -73,11 +73,18 @@ class Chantier
     #[ORM\JoinColumn(nullable: false)]
     private ?Statut $statut = null;
 
+    /**
+     * @var Collection<int, ChantierPresta>
+     */
+    #[ORM\OneToMany(targetEntity: ChantierPresta::class, mappedBy: 'chantier')]
+    private Collection $chantierPrestations;
+
 
     public function __construct()
     {
         $this->chantierEtapes = new ArrayCollection();
         $this->chantierPostes = new ArrayCollection();
+        $this->chantierPrestations = new ArrayCollection();
 
     }
 
@@ -310,6 +317,36 @@ class Chantier
     public function setStatut(?Statut $statut): static
     {
         $this->statut = $statut;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ChantierPresta>
+     */
+    public function getChantierPrestations(): Collection
+    {
+        return $this->chantierPrestations;
+    }
+
+    public function addChantierPrestation(ChantierPresta $chantierPrestation): static
+    {
+        if (!$this->chantierPrestations->contains($chantierPrestation)) {
+            $this->chantierPrestations->add($chantierPrestation);
+            $chantierPrestation->setChantier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChantierPrestation(ChantierPresta $chantierPrestation): static
+    {
+        if ($this->chantierPrestations->removeElement($chantierPrestation)) {
+            // set the owning side to null (unless already changed)
+            if ($chantierPrestation->getChantier() === $this) {
+                $chantierPrestation->setChantier(null);
+            }
+        }
 
         return $this;
     }
