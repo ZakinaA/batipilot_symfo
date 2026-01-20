@@ -27,6 +27,9 @@ class ChantierPoste
     #[ORM\Column(name: 'montant_ttc', type: 'float', nullable: true)]
     private ?float $montantTTC = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $nbJoursMo = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -73,6 +76,18 @@ class ChantierPoste
     public function setMontantTTC(?float $montantTTC): static
     {
         $this->montantTTC = $montantTTC;
+        return $this;
+    }
+
+    public function getNbJoursMo(): ?float
+    {
+        return $this->nbJoursMo;
+    }
+
+    public function setNbJoursMo(?float $nbJoursMo): static
+    {
+        $this->nbJoursMo = $nbJoursMo;
+
         return $this;
     }
 }
