@@ -79,6 +79,9 @@ class Chantier
     #[ORM\OneToMany(targetEntity: ChantierPresta::class, mappedBy: 'chantier')]
     private Collection $chantierPrestations;
 
+    #[ORM\ManyToOne(inversedBy: 'chantier')]
+    private ?equipe $chantier = null;
+
 
     public function __construct()
     {
@@ -347,6 +350,18 @@ class Chantier
                 $chantierPrestation->setChantier(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getChantier(): ?equipe
+    {
+        return $this->chantier;
+    }
+
+    public function setChantier(?equipe $chantier): static
+    {
+        $this->chantier = $chantier;
 
         return $this;
     }

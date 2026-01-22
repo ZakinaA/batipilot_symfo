@@ -30,9 +30,16 @@ class Equipe
     #[ORM\OneToMany(targetEntity: ChantierPresta::class, mappedBy: 'equipe')]
     private Collection $chantiers;
 
+    /**
+     * @var Collection<int, Chantier>
+     */
+    #[ORM\OneToMany(targetEntity: Chantier::class, mappedBy: 'chantier')]
+    private Collection $chantier;
+
     public function __construct()
     {
         $this->chantiers = new ArrayCollection();
+        $this->chantier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,5 +111,13 @@ class Equipe
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Chantier>
+     */
+    public function getChantier(): Collection
+    {
+        return $this->chantier;
     }
 }
