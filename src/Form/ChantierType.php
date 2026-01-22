@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Chantier;
+use App\Entity\Statut;
 use App\Entity\Client;
 use App\Repository\PosteRepository;
 use App\Repository\EtapeRepository;
@@ -96,6 +97,13 @@ class ChantierType extends AbstractType
                 'label' => 'Surface Habitable (m²)',
                 'required' => false,
                 'attr' => ['class' => 'form-control']
+            ])
+            ->add('statut', EntityType::class, [
+                'class' => Statut::class,
+                'choice_label' => 'libelle', 
+                'placeholder' => 'Sélectionner un statut',
+                'label' => 'Statut du chantier',
+                'required' => true,
             ])
             ;
 

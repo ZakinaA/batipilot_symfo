@@ -28,18 +28,18 @@ class Equipe
      * @var Collection<int, ChantierPresta>
      */
     #[ORM\OneToMany(targetEntity: ChantierPresta::class, mappedBy: 'equipe')]
-    private Collection $chantiers;
+    private Collection $chantiersPresta;
 
     /**
      * @var Collection<int, Chantier>
      */
-    #[ORM\OneToMany(targetEntity: Chantier::class, mappedBy: 'chantier')]
-    private Collection $chantier;
+    #[ORM\OneToMany(targetEntity: Chantier::class, mappedBy: 'equipe', cascade: ['persist', 'remove'])]
+    private Collection $chantiers;
 
     public function __construct()
     {
+        $this->chantiersPresta = new ArrayCollection();
         $this->chantiers = new ArrayCollection();
-        $this->chantier = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -86,27 +86,27 @@ class Equipe
     /**
      * @return Collection<int, ChantierPresta>
      */
-    public function getChantiers(): Collection
+    public function getChantiersPresta(): Collection
     {
-        return $this->chantiers;
+        return $this->chantiersPresta;
     }
 
-    public function addChantier(ChantierPresta $chantier): static
+    public function addChantierPresta(ChantierPresta $chantierPresta): static
     {
-        if (!$this->chantiers->contains($chantier)) {
-            $this->chantiers->add($chantier);
-            $chantier->setEquipe($this);
+        if (!$this->chantiersPresta->contains($chantierPresta)) {
+            $this->chantiersPresta->add($chantierPresta);
+            $chantierPresta->setEquipe($this);
         }
 
         return $this;
     }
 
-    public function removeChantier(ChantierPresta $chantier): static
+    public function removeChantierPresta(ChantierPresta $chantierPresta): static
     {
-        if ($this->chantiers->removeElement($chantier)) {
+        if ($this->chantiersPresta->removeElement($chantierPresta)) {
             // set the owning side to null (unless already changed)
-            if ($chantier->getEquipe() === $this) {
-                $chantier->setEquipe(null);
+            if ($chantierPresta->getEquipe() === $this) {
+                $chantierPresta->setEquipe(null);
             }
         }
 
@@ -116,8 +116,29 @@ class Equipe
     /**
      * @return Collection<int, Chantier>
      */
-    public function getChantier(): Collection
+    public function getChantiers(): Collection
     {
-        return $this->chantier;
+        return $this->chantiers;
+    }
+
+    public function addChantier(Chantier $chantier): static
+    {
+        if (!$this->chantiers->contains($chantier)) {
+            $this->chantiers->add($chantier);
+            $chantier->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChantier(Chantier $chantier): static
+    {
+        if ($this->chantiers->removeElement($chantier)) {
+            // set the owning side to null (unless already changed)
+            if ($chantier->getEquipe() === $this) {
+                $chantier->setEquipe(null);
+            }
+        }
+        return $this;
     }
 }
