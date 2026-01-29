@@ -193,15 +193,33 @@
                             <h4 class="mb-0">
                                 <i class="bi bi-folder"></i> {{ poste.libelle }}
                             </h4>
-                            <div class="poste-montants d-flex gap-3">
-                                <div class="montant-field">
-                                    {{ form_label(form['poste_' ~ poste.id ~ '_montantHT']) }}
-                                    {{ form_widget(form['poste_' ~ poste.id ~ '_montantHT']) }}
-                                </div>
-                                <div class="montant-field">
-                                    {{ form_label(form['poste_' ~ poste.id ~ '_montantTTC']) }}
-                                    {{ form_widget(form['poste_' ~ poste.id ~ '_montantTTC']) }}
-                                </div>
+                            <div class="montant-field">
+                                {{ form_label(form['poste_' ~ poste.id ~ '_montantHT']) }}
+                                {{ form_widget(
+                                form['poste_' ~ poste.id ~ '_montantHT'],
+                                {
+                                    'attr': {
+                                        'class': 'form-control montant-ht',
+                                        'data-poste-id': poste.id,
+                                        'data-tva': poste.tva ?? 0
+                                    }
+                                }
+                            ) }}
+
+                            </div>
+
+                            <div class="montant-field">
+                                {{ form_label(form['poste_' ~ poste.id ~ '_montantTTC']) }}
+                                {{ form_widget(
+                                    form['poste_' ~ poste.id ~ '_montantTTC'],
+                                    {
+                                        'attr': {
+                                            'class': 'form-control montant-ttc',
+                                            'data-poste-id': poste.id,
+                                            'readonly': true
+                                        }
+                                    }
+                                ) }}
                             </div>
                             {% if poste.equipe == 1 %}
                                 {% set fieldNbJours = 'poste_' ~ poste.id ~ '_nbJoursMo' %}
@@ -272,4 +290,42 @@
     {{ form_widget(form._token) }}
     {{ form_end(form, {'render_rest': false}) }}
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    document.querySelectorAll('.montant-ht').forEach(inputHT => {
+
+        const calculerTTC = () => {
+            const posteId = inputHT.dataset.posteId;
+            const tvaBrute = parseFloat(inputHT.dataset.tva) || 0;
+            const tauxTVA = tvaBrute / 100;
+
+            const inputTTC = document.querySelector(
+                '.montant-ttc[data-poste-id="' + posteId + '"]'
+            );
+
+            if (!inputTTC) return;
+
+            const ht = parseFloat(inputHT.value.replace(',', '.'));
+
+            if (!isNaN(ht)) {
+                const ttc = ht * (1 + tauxTVA);
+                inputTTC.value = ttc.toFixed(2);
+            } else {
+                inputTTC.value = '';
+            }
+        };
+
+        // Quand on quitte le champ
+        inputHT.addEventListener('blur', calculerTTC);
+
+        // Quand la valeur est validée
+        inputHT.addEventListener('change', calculerTTC);
+    });
+
+});
+</script>
+
+
+
 {% endblock %}
