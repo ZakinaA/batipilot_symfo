@@ -1,15 +1,30 @@
-name: Déployer sur le serveur
-  uses: appleboy/ssh-action@v0.1.7
-  with:
-    host: ${{ secrets.SERVER_HOST }}
-    username: ${{ secrets.SERVER_USER }}
-    key: ${{ secrets.SERVER_SSH_KEY }}
-    port: 22
-    script: |
-      cd /var/www/html/batipilot || exit
-      git pull origin main
-      composer install --no-dev --optimize-autoloader
-      #php bin/console doctrine:migrations:migrate --no-interaction
-      php bin/console cache:clear
-      chown -R www-data:www-data /var/www/html/batipilot/var /var/www/html/batipilot/public
-      chmod -R 775 /var/www/html/batipilot/var /var/www/html/batipilot/public
+name: Déploiement Symfony
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Déployer sur le serveur
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /var/www/html/batipilot || exit
+            git pull origin main
+            composer install --no-dev --optimize-autoloader
+            #php bin/console doctrine:migrations:migrate --no-interaction
+            php bin/console cache:clear
+            chown -R www-data:www-data /var/www/html/batipilot/var /var/www/html/batipilot/public
+            chmod -R 775 /var/www/html/batipilot/var /var/www/html/batipilot/public
