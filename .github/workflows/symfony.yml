@@ -1,4 +1,4 @@
-- name: Déployer sur le serveur
+name: Déployer sur le serveur
   uses: appleboy/ssh-action@v0.1.7
   with:
     host: ${{ secrets.SERVER_HOST }}
