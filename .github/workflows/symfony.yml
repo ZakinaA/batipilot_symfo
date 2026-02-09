@@ -30,4 +30,4 @@ jobs:
             php bin/console cache:clear
             #chown -R batipilot:www-data /var/www/html/batipilot/var
             #chown -R batipilot:www-data /var/www/html/batipilot/public
-            chmod -R 775 /var/www/html/batipilot/var /var/www/html/batipilot/public
+            #chmod -R 775 /var/www/html/batipilot/var /var/www/html/batipilot/public
