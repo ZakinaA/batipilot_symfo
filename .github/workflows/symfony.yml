@@ -41,7 +41,8 @@ jobs:
             php bin/console cache:clear --env=prod
 
             echo "Fixing permissions..."
-            chown -R batipilot:www-data var public
-            chmod -R 775 var public
+            chown -R batipilot:www-data /var/www/html/batipilot/var
+            chown -R batipilot:www-data /var/www/html/batipilot/public
+            chmod -R 775 /var/www/html/batipilot/var /var/www/html/batipilot/public
 
             echo "Deployment finished"
