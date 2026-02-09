@@ -48,6 +48,6 @@ jobs:
           rm -rf var/cache/* var/log/*
 
           # Exécuter Symfony CLI avec l'utilisateur web pour que permissions soient correctes
-          sudo -u $WEB_USER php bin/console cache:clear --env=$ENV
-          sudo -u $WEB_USER php bin/console assets:install public
-          sudo -u $WEB_USER php bin/console importmap:install
+          sudo -u $WEB_USER php bin/console cache:clear
+          #sudo -u $WEB_USER php bin/console assets:install public
+          #sudo -u $WEB_USER php bin/console importmap:install
