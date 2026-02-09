@@ -28,6 +28,6 @@ jobs:
             composer install --no-dev --optimize-autoloader
             #php bin/console doctrine:migrations:migrate --no-interaction
             php bin/console cache:clear
-            sudo su $username chown -R batipilot:www-data /var/www/html/batipilot/var
-            sudo su $username chown -R batipilot:www-data /var/www/html/batipilot/public
-            sudo su $username chmod -R 775 /var/www/html/batipilot/var /var/www/html/batipilot/public
+            su $username chown -R batipilot:www-data /var/www/html/batipilot/var
+            su $username chown -R batipilot:www-data /var/www/html/batipilot/public
+            su $username chmod -R 775 /var/www/html/batipilot/var /var/www/html/batipilot/public
