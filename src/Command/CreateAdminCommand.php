@@ -28,14 +28,6 @@ class CreateAdminCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        // Email
-        $email = $io->ask('Email de l’utilisateur');
-
-        if ($this->entityManager->getRepository(User::class)->findOneBy(['email' => $email])) {
-            $io->error('❌ Cet email existe déjà');
-            return Command::FAILURE;
-        }
-
         // Mot de passe (caché)
         $plainPassword = $io->askHidden('Mot de passe');
 
@@ -45,7 +37,6 @@ class CreateAdminCommand extends Command
         }
 
         $user = new User();
-        $user->setEmail($email);
         $user->setRoles(['ROLE_USER']);
 
         $hashedPassword = $this->passwordHasher->hashPassword(
