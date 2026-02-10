@@ -13,13 +13,8 @@
     {% for poste in postes %}
         <details class="current" data-random-border>
             <summary>
-                <a>{{ poste.libelle }}</a>
+               <a href="{{ path('app_poste_show', {'id': poste.id}) }}">{{ poste.libelle }}</a>
                 <span class="count">{{ poste.etapes|length }}</span>
-                <a href="{{ path('app_etape_new', {'poste': poste.id}) }}"
-                    class="btn-add"
-                    style="margin-left:10px;">
-                        Nouvelle Etape
-                </a>
             </summary>
 
            

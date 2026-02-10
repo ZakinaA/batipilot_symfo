@@ -814,3 +814,26 @@
         .page-chantier-create .montant-field:last-child {
             min-width: 110px;
         }
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-logout {
+            width: 100%;
+            margin-top: auto;
+            padding: 10px;
+            background: #f1f5f9;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .btn-logout:hover {
+            background: white;
+            border-color: var(--danger);
+            color: var(--danger);
+        }

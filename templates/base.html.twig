@@ -108,8 +108,15 @@
                     </ul>
                 </li>
             </ul>
+            {% if app.user %}
+            <form method="post" action="{{ path('app_logout') }}" style="margin-top: auto;">
+                <button type="submit" class="btn-logout">
+                    Se déconnecter
+                </button>
+            </form>
+        {% endif %}
         </aside>
-
+        
 
         <main class="content">
             {% block body %}{% endblock %}
