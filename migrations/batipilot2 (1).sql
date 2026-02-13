@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3307
--- Généré le : mer. 04 fév. 2026 à 13:31
+-- Généré le : ven. 13 fév. 2026 à 09:21
 -- Version du serveur : 11.4.9-MariaDB
 -- Version de PHP : 8.3.28
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `chantier` (
   KEY `IDX_636F27F619EB6921` (`client_id`),
   KEY `IDX_636F27F6F6203804` (`statut_id`),
   KEY `IDX_636F27F66D861B89` (`equipe_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `chantier`
@@ -61,7 +61,7 @@ INSERT INTO `chantier` (`id`, `adresse`, `copos`, `ville`, `date_prevue`, `date_
 (2, '6 rue des fossettes', '14123', 'Ifs', '2025-11-10', '2025-12-01', '2026-02-28', '2026-03-05', 24, 22, 2, 1, 0, 82, 65, 2, 'Passage réseaux électriques à coordonner'),
 (3, '78 rue des fanons ', '26300', 'bilville', '2025-12-15', '2026-01-01', '2026-03-10', '2026-03-15', 36, 24, 3, 1, 0, 75, 59, 1, 'Isolation renforcée demandée par le client'),
 (4, '18 rue de la chausser', '75000', 'Bretteville', '2024-10-01', '2025-01-02', '2026-06-10', '2026-09-18', 52, 45, 4, 1, 0, 90, 71, 2, 'Trémie escalier à ajuster sur site'),
-(5, '52 rue des galets ', '16000', 'Vic-Fezensac', '2025-05-01', '2025-06-01', '2026-05-10', '2026-05-15', 22, 25, 5, 1, 0, 68, 53, 1, 'Attention accès chantier étroit'),
+(5, '52 rue des galets', '16000', 'Vic-Fezensac', '2025-05-01', '2025-06-01', '2026-05-10', '2026-05-15', 22, 25, 5, 1, 0, 68, 53, 1, 'Attention accès chantier étroit'),
 (6, '12 rue des Tilleuls', '45120', 'Montfaucon', '2027-01-05', '2027-02-01', '2027-03-15', '2027-03-20', 18, 25, 6, 2, 0, 85, 68, 2, 'Fenêtre de toit à repositionner'),
 (7, '8 avenue du Verger', '33240', 'Saint-Laurin', '2027-04-10', '2027-05-01', '2027-06-10', '2027-06-15', 42, 50, 7, 2, 0, 92, 73, 1, 'Délai menuiseries à surveiller'),
 (8, '27 impasse des Pins', '68450', 'Valbois', '2027-07-01', '2027-07-15', '2027-08-30', '2027-09-05', 12, 18, 8, 2, 0, 80, 63, 2, 'Prévoir renfort de plancher'),
@@ -71,7 +71,8 @@ INSERT INTO `chantier` (`id`, `adresse`, `copos`, `ville`, `date_prevue`, `date_
 (12, '6 allée des Cerisiers', '80470', 'Bellefontaine', '2023-04-10', '2023-05-01', '2023-06-10', '2023-06-15', 22, 28, 15, 3, 0, 95, 76, 2, 'Coordination charpentier / plaquiste'),
 (13, '33 rue du Panorama', '11700', 'Hauterive', '2023-07-01', '2023-07-15', '2023-08-30', '2023-09-05', 38, 45, 14, 3, 1, 83, 66, 1, 'Présence d’un poteau à habiller'),
 (14, '14 place des Érables', '49560', 'Pontclair', '2024-02-05', '2024-03-01', '2024-04-10', '2024-04-15', 16, 22, 12, 3, 0, 77, 61, 2, 'Vérifier conformité RT en isolation'),
-(15, '2 route des Vignes', '90210', 'Valcôte', '2026-07-09', '2026-07-09', '2027-06-11', '2027-06-09', 48, 55, 11, 2, 0, 91, 72, 1, 'Client souhaite cloisons modifiables');
+(15, '2 route des Vignes', '90210', 'Valcôte', '2026-07-09', '2026-07-09', '2027-06-11', '2027-06-09', 48, 55, 11, 2, 0, 91, 72, 1, 'Client souhaite cloisons modifiables'),
+(17, NULL, NULL, 'test', NULL, NULL, NULL, NULL, NULL, NULL, 22, 2, 0, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -92,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `chantier_etape` (
   PRIMARY KEY (`id`),
   KEY `IDX_3B99027D4A8CA2AD` (`etape_id`),
   KEY `IDX_3B99027DD0C0049D` (`chantier_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=186 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `chantier_etape`
@@ -102,18 +103,76 @@ INSERT INTO `chantier_etape` (`id`, `val_text`, `val_date`, `val_date_heure`, `v
 (13, NULL, NULL, NULL, 1, NULL, 3, 1),
 (14, NULL, NULL, NULL, 0, NULL, 3, 2),
 (15, 'M. Dassin', NULL, NULL, NULL, NULL, 3, 7),
-(36, NULL, NULL, NULL, 0, NULL, 2, 1),
-(37, NULL, '2025-12-22', NULL, NULL, NULL, 2, 3),
-(38, NULL, '2025-12-26', NULL, NULL, NULL, 2, 5),
-(39, NULL, NULL, NULL, 1, NULL, 2, 6),
-(40, NULL, NULL, NULL, 0, NULL, 2, 8),
-(41, NULL, NULL, '2025-12-31 10:00:00', NULL, NULL, 2, 9),
-(42, NULL, NULL, NULL, 1, NULL, 2, 10),
-(43, NULL, '2025-12-31', NULL, NULL, NULL, 2, 14),
-(44, NULL, '2025-12-11', NULL, NULL, NULL, 2, 17),
-(45, NULL, NULL, NULL, 1, NULL, 2, 19),
 (76, NULL, NULL, NULL, 1, NULL, 1, 1),
-(77, NULL, NULL, NULL, 1, NULL, 1, 10);
+(77, NULL, NULL, NULL, 1, NULL, 1, 10),
+(118, NULL, NULL, NULL, 1, NULL, 17, 1),
+(119, NULL, NULL, NULL, 1, NULL, 17, 2),
+(120, NULL, NULL, NULL, 1, NULL, 17, 4),
+(121, NULL, NULL, NULL, 1, NULL, 17, 6),
+(122, NULL, NULL, NULL, 1, NULL, 17, 11),
+(123, NULL, NULL, NULL, 1, NULL, 17, 8),
+(124, NULL, NULL, NULL, 1, NULL, 17, 10),
+(125, NULL, NULL, NULL, 1, NULL, 17, 15),
+(126, NULL, NULL, NULL, 1, NULL, 17, 19),
+(127, NULL, NULL, NULL, 1, NULL, 17, 21),
+(128, NULL, NULL, NULL, 0, NULL, 4, 1),
+(129, NULL, NULL, NULL, 1, NULL, 4, 2),
+(130, NULL, '2026-02-14', NULL, NULL, NULL, 4, 3),
+(131, NULL, NULL, NULL, 1, NULL, 4, 4),
+(132, NULL, '2026-02-15', NULL, NULL, NULL, 4, 5),
+(133, NULL, NULL, NULL, 1, NULL, 4, 6),
+(134, 'jean pierre', NULL, NULL, NULL, NULL, 4, 7),
+(135, NULL, NULL, NULL, 1, NULL, 4, 11),
+(136, 'pré chantier établie', NULL, NULL, NULL, NULL, 4, 23),
+(137, NULL, NULL, NULL, 1, NULL, 4, 8),
+(138, NULL, NULL, '2026-02-14 10:00:00', NULL, NULL, 4, 9),
+(139, NULL, NULL, NULL, 1, NULL, 4, 10),
+(140, NULL, '2026-02-14', NULL, NULL, NULL, 4, 12),
+(141, NULL, '2026-02-14', NULL, NULL, NULL, 4, 13),
+(142, NULL, '2026-02-19', NULL, NULL, NULL, 4, 14),
+(143, NULL, NULL, NULL, 1, NULL, 4, 15),
+(144, 'Macon', NULL, NULL, NULL, NULL, 4, 16),
+(145, NULL, NULL, '2026-02-14 10:55:00', NULL, NULL, 4, 18),
+(146, NULL, NULL, NULL, 1, NULL, 4, 19),
+(147, NULL, NULL, NULL, 1, NULL, 4, 21),
+(148, NULL, NULL, NULL, 0, NULL, 5, 1),
+(149, NULL, NULL, NULL, 1, NULL, 5, 2),
+(150, NULL, '2026-02-26', NULL, NULL, NULL, 5, 3),
+(151, NULL, NULL, NULL, 0, NULL, 5, 4),
+(152, NULL, '2026-02-28', NULL, NULL, NULL, 5, 5),
+(153, NULL, NULL, NULL, 0, NULL, 5, 6),
+(154, 'phillipe', NULL, NULL, NULL, NULL, 5, 7),
+(155, NULL, NULL, NULL, 1, NULL, 5, 11),
+(156, 'pré chantier presque établie', NULL, NULL, NULL, NULL, 5, 23),
+(157, NULL, NULL, NULL, 1, NULL, 5, 8),
+(158, NULL, NULL, '2026-02-22 12:00:00', NULL, NULL, 5, 9),
+(159, NULL, NULL, NULL, 1, NULL, 5, 10),
+(160, NULL, '2026-02-27', NULL, NULL, NULL, 5, 12),
+(161, NULL, NULL, NULL, 1, NULL, 5, 15),
+(162, 'Macon', NULL, NULL, NULL, NULL, 5, 16),
+(163, NULL, NULL, NULL, 1, NULL, 5, 19),
+(164, NULL, NULL, NULL, 0, NULL, 5, 21),
+(165, NULL, NULL, NULL, 0, NULL, 2, 1),
+(166, NULL, NULL, NULL, 1, NULL, 2, 2),
+(167, NULL, '2025-12-22', NULL, NULL, NULL, 2, 3),
+(168, NULL, NULL, NULL, 0, NULL, 2, 4),
+(169, NULL, '2025-12-26', NULL, NULL, NULL, 2, 5),
+(170, NULL, NULL, NULL, 1, NULL, 2, 6),
+(171, 'Jane', NULL, NULL, NULL, NULL, 2, 7),
+(172, NULL, NULL, NULL, 1, NULL, 2, 11),
+(173, 'pré chantier bientot établie', NULL, NULL, NULL, NULL, 2, 23),
+(174, NULL, NULL, NULL, 0, NULL, 2, 8),
+(175, NULL, NULL, '2025-12-31 10:00:00', NULL, NULL, 2, 9),
+(176, NULL, NULL, NULL, 1, NULL, 2, 10),
+(177, NULL, '2026-02-20', NULL, NULL, NULL, 2, 12),
+(178, NULL, '2025-10-15', NULL, NULL, NULL, 2, 13),
+(179, NULL, '2025-12-31', NULL, NULL, NULL, 2, 14),
+(180, NULL, NULL, NULL, 1, NULL, 2, 15),
+(181, 'Macon', NULL, NULL, NULL, NULL, 2, 16),
+(182, NULL, '2025-12-11', NULL, NULL, NULL, 2, 17),
+(183, NULL, NULL, '2026-01-31 13:00:00', NULL, NULL, 2, 18),
+(184, NULL, NULL, NULL, 1, NULL, 2, 19),
+(185, NULL, NULL, NULL, 1, NULL, 2, 21);
 
 -- --------------------------------------------------------
 
@@ -134,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `chantier_poste` (
   PRIMARY KEY (`id`),
   KEY `IDX_6F4F780BD0C0049D` (`chantier_id`),
   KEY `IDX_6F4F780BA0905086` (`poste_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `chantier_poste`
@@ -147,7 +206,37 @@ INSERT INTO `chantier_poste` (`id`, `montant_ht`, `montant_ttc`, `chantier_id`, 
 (6, 4500, 8000, 3, 5, NULL, NULL, NULL),
 (32, 5000.23, 5500.45, 1, 1, NULL, NULL, NULL),
 (33, 8500, 10000.25, 1, 2, NULL, NULL, NULL),
-(72, 452, 423, 15, 8, NULL, 'test', 525);
+(72, 452, 423, 15, 8, NULL, 'test', 525),
+(83, 0, 0, 4, 1, NULL, NULL, NULL),
+(84, 500, 550, 4, 2, 3, NULL, NULL),
+(85, 352, 352, 4, 3, 2, NULL, NULL),
+(86, 223, 245.3, 4, 4, NULL, 'entreprise Maçonnerie', 254),
+(87, 811, 851.55, 4, 5, NULL, 'entreprise escalier/balustrade', 456),
+(88, 173, 182.51, 4, 6, 5, NULL, NULL),
+(89, 244, 268.4, 4, 7, 3, NULL, NULL),
+(90, 452, 497.2, 4, 8, NULL, 'prestataire electricien', 525),
+(91, 900, 990, 4, 9, NULL, 'entreprise de plomberie', 753),
+(92, 600, 660, 4, 10, NULL, 'entreprise de revêtement', 357),
+(93, 0, 0, 5, 1, NULL, NULL, NULL),
+(94, 450, 495, 5, 2, 2, NULL, NULL),
+(95, 456, 456, 5, 3, 3, NULL, NULL),
+(96, 375, 412.5, 5, 4, NULL, 'entreprise Maçonnerie', 254),
+(97, 379, 397.95, 5, 5, NULL, 'entreprise escalier/balustrade', 456),
+(98, 294, 310.17, 5, 6, 6, NULL, NULL),
+(99, 376, 413.6, 5, 7, 8, NULL, NULL),
+(100, 527, 579.7, 5, 8, NULL, 'prestataire electricien', 258),
+(101, 985, 1083.5, 5, 9, NULL, 'entreprise de plomberie', 753),
+(102, 695, 764.5, 5, 10, NULL, 'entreprise de revêtement', 357),
+(103, 0, 0, 2, 1, NULL, NULL, NULL),
+(104, 500, 550, 2, 2, 6, NULL, NULL),
+(105, 352, 352, 2, 3, 2, NULL, NULL),
+(106, 223, 245.3, 2, 4, NULL, 'entreprise Maçonnerie', 254),
+(107, 518, 543.9, 2, 5, NULL, 'entreprise escalier/balustrade', 456),
+(108, 498, 525.39, 2, 6, 2, NULL, NULL),
+(109, 375, 412.5, 2, 7, 5, NULL, NULL),
+(110, 583, 641.3, 2, 8, NULL, 'prestataire electricien', 525),
+(111, 944, 1038.4, 2, 9, NULL, 'entreprise de plomberie', 753),
+(112, 573, 630.3, 2, 10, NULL, 'entreprise de revêtement', 357);
 
 -- --------------------------------------------------------
 
@@ -167,13 +256,6 @@ CREATE TABLE IF NOT EXISTS `chantier_presta` (
   KEY `IDX_C49E4656A0905086` (`poste_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Déchargement des données de la table `chantier_presta`
---
-
-INSERT INTO `chantier_presta` (`id`, `montant_presta`, `nom_presta`, `chantier_id`, `poste_id`) VALUES
-(1, 500, 'test_prestataire', 15, 8);
-
 -- --------------------------------------------------------
 
 --
@@ -188,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `client` (
   `telephone` varchar(14) DEFAULT NULL,
   `mail` varchar(120) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `client`
@@ -210,7 +292,8 @@ INSERT INTO `client` (`id`, `nom`, `prenom`, `telephone`, `mail`) VALUES
 (13, 'Michel', 'Nathan', '06 12 34 56 11', 'nathan.michel@example.com'),
 (14, 'Lefèvre', 'Sarah', '06 12 34 56 12', 'sarah.lefevre@example.com'),
 (15, 'Garcia', 'Enzo', '06 12 34 56 13', 'enzo.garcia@example.com'),
-(21, 'Villain', 'Alexandre', '06.45.65.65.65', 'test.test@gmail.com');
+(21, 'Villain', 'Alexandre', '06.45.65.65.65', 'test.test@gmail.com'),
+(22, 'tes', 'test', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -239,7 +322,9 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 ('DoctrineMigrations\\Version20260123132223', '2026-01-23 13:22:31', 181),
 ('DoctrineMigrations\\Version20260127091939', '2026-01-27 09:19:44', 74),
 ('DoctrineMigrations\\Version20260128144852', '2026-01-28 14:54:14', 96),
-('DoctrineMigrations\\Version20260203101313', '2026-02-03 10:14:31', 75);
+('DoctrineMigrations\\Version20260203101313', '2026-02-03 10:14:31', 75),
+('DoctrineMigrations\\Version20260209080900', '2026-02-09 08:09:08', 95),
+('DoctrineMigrations\\Version20260209090053', '2026-02-09 09:01:00', 51);
 
 -- --------------------------------------------------------
 
@@ -281,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `etape` (
   PRIMARY KEY (`id`),
   KEY `IDX_285F75DDFB3A43EA` (`etape_format_id`),
   KEY `IDX_285F75DDA0905086` (`poste_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `etape`
@@ -372,14 +457,14 @@ CREATE TABLE IF NOT EXISTS `poste` (
   `equipe` int(100) DEFAULT NULL,
   `presta` int(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `poste`
 --
 
 INSERT INTO `poste` (`id`, `libelle`, `ordre`, `tva`, `archive`, `equipe`, `presta`) VALUES
-(1, 'Pré-chantier', 1, NULL, 0, 0, 1),
+(1, 'Pré-chantier', 1, NULL, 0, 0, 0),
 (2, 'Charpente', 2, 10, 0, 1, 0),
 (3, 'Couverture', 3, NULL, 0, 1, 0),
 (4, 'Maçonnerie', 4, 10, 0, 0, 1),
@@ -421,12 +506,22 @@ INSERT INTO `statut` (`id`, `libelle`) VALUES
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(180) NOT NULL,
   `roles` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`roles`)),
   `password` varchar(255) NOT NULL,
+  `first_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `username` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_IDENTIFIER_EMAIL` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  UNIQUE KEY `UNIQ_IDENTIFIER_USERNAME` (`username`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`id`, `roles`, `password`, `first_name`, `last_name`, `username`) VALUES
+(10, '[\"ROLE_USER\"]', '$2y$13$69svii.S4Z2vFgkyfEN3o.iHYXmIEBa5mI8eWFHJDc/o1k8tOHM72', 'alexandre', 'villain', 'villain.alexandre'),
+(11, '[\"ROLE_USER\"]', '$2y$13$.R/GZbkvADcOOhacW/V1OutK6F1MNMM4RKK.347P5ovXC2PF65Kdi', 'test', 'test', 'test.test');
 
 --
 -- Contraintes pour les tables déchargées
