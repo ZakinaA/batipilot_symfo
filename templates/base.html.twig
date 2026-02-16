@@ -2,118 +2,67 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}Comble & Création{% endblock %}</title>
 
     {{ importmap('app') }}
-
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 </head>
 
 <body>
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-        }
 
-        body {
-            background: #f5f7fb;
-            font-family: Inter, sans-serif;
-        }
+<div class="layout">
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-        .sidebar {
-            position: fixed;          /* clé */
-            top: 0;
-            left: 0;
-            width: 240px;
-            height: 100vh;            /* clé */
-            background: #ffffff;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-            padding: 20px 15px;
-            box-sizing: border-box;
-        }
+        <div class="nomSite">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="logo">
+            <h1>Comble & Création</h1>
+        </div>
 
-            .content {
-                margin-left: 240px;
-                flex: 1;
-                padding: 30px;
-            }
-            .menu {
-            list-style: none;
-            padding: 0;
-            margin: 20px 0;
-        }
-
-        .menu-item {
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 10px;
-        }
-
-        .submenu {
-            list-style: none;
-            padding-left: 15px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .submenu li {
-            margin: 5px 0;
-        }
-
-        .submenu a {
-            text-decoration: none;
-            color: #555;
-            font-size: 14px;
-        }
-
-        .menu-item:hover .submenu {
-            display: block;
-        }
-
-        .logo {
-        width: 180px;
-        display: block;
-        margin: 0 auto 20px;
-        }
-
-    </style>
-
-    <div class="layout">
-        <aside class="sidebar">
-            <div class="nomSite">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo Comble et Création" class="logo">
-                <h1>Combles Création</h1>
-            </div>
-
+        <nav>
             <ul class="menu">
-                <li class="menu-item">
-                    Chantiers
-                    <ul class="submenu">
-                        <li><a href="{{ path('app_chantier_index') }}">Liste les chantiers</a></li>
-                        <li><a href="{{ path('app_chantier_new') }}">Ajouter un chantier</a></li>
-                    </ul>
-                </li>
-                <br>
-                <li class="menu-item">
-                    Postes
-                    <ul class="submenu">
-                        <li><a href="{{ path('app_poste_index') }}">Liste les postes</a></li>
-                        <li><a href="{{ path('app_poste_new') }}">Ajouter un poste</a></li>
-                    </ul>
-                </li>
+
+                <li class="menu-item">Chantiers</li>
+                <ul class="submenu">
+                    <li><a href="{{ path('app_chantier_index') }}">Liste des chantiers</a></li>
+                    <li><a href="{{ path('app_chantier_new') }}">Ajouter un chantier</a></li>
+                </ul>
+
+                <li class="menu-item">Postes</li>
+                <ul class="submenu">
+                    <li><a href="{{ path('app_poste_index') }}">Liste des postes</a></li>
+                    <li><a href="{{ path('app_poste_new') }}">Ajouter un poste</a></li>
+                </ul>
+
+                <li class="menu-item">Equipes</li>
+                <ul class="submenu">
+                    <li><a href="{{ path('app_equipe_index') }}">Liste des equipes</a></li>
+                </ul>
+
             </ul>
-        </aside>
+        </nav>
 
+        {% if app.user %}
+            <form method="post" action="{{ path('app_logout') }}">
+                <button type="submit" class="btn-logout">
+                    Se déconnecter
+                </button>
+            </form>
+        {% endif %}
 
-        <main class="content">
+    </aside>
+
+    <!-- CONTENU -->
+    <main class="content">
+
+        <div class="dashboard">
             {% block body %}{% endblock %}
-        </main>
-    </div>
+        </div>
+
+    </main>
+
+</div>
+
 </body>
 </html>
