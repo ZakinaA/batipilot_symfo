@@ -177,23 +177,25 @@ class ChantierType extends AbstractType
             }
 
             // ===== PRESTATAIRE =====
-if ($poste->isPresta() && $poste->getLibelle() !== 'Pré chantier') {
-    $form->add('poste_'.$poste->getId().'_nomPrestataire', TextType::class, [
-        'mapped' => false,
-        'required' => false,
-        'label' => 'Prestataire',
-        'data' => $cp?->getNomPrestataire(),
-    ]);
+            if ($poste->isPresta() && $poste->getLibelle() !== 'Pré chantier') {
 
-    $form->add('poste_'.$poste->getId().'_montantPrestataire', NumberType::class, [
-        'mapped' => false,
-        'required' => false,
-        'label' => 'Montant prestataire',
-        'data' => $cp?->getMontantPrestataire(),
-        'scale' => 2,
-    ]);
-}
+                $form->add('poste_'.$poste->getId().'_nomPrestataire', TextType::class, [
+                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'Prestataire',
+                    'data' => $cp?->getNomPrestataire(),
+                    'attr' => ['class' => 'form-control form-control-sm'],
+                ]);
 
+                $form->add('poste_'.$poste->getId().'_montantPrestataire', NumberType::class, [
+                    'mapped' => false,
+                    'required' => false,
+                    'label' => 'Montant prestataire',
+                    'data' => $cp?->getMontantPrestataire(),
+                    'scale' => 2,
+                    'attr' => ['class' => 'form-control form-control-sm'],
+                ]);
+            }
 
             // ===== ÉTAPES =====
             $etapes = $this->etapeRepository->findBy([

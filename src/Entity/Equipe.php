@@ -21,26 +21,31 @@ class Equipe
     #[ORM\Column(nullable: true)]
     private ?float $montantMo = null;
 
-    /**
-     * @var Collection<int, ChantierPresta>
-     */
-    #[ORM\OneToMany(targetEntity: ChantierPresta::class, mappedBy: 'equipe')]
-    private Collection $chantiersPresta;
-
-    /**
-     * @var Collection<int, chantier>
-     */
-    #[ORM\OneToMany(targetEntity: chantier::class, mappedBy: 'equipe')]
-    private Collection $equipe;
-
     #[ORM\Column(nullable: true)]
     private ?float $indice = null;
-    
+
+    /**
+     * 🔹 Une équipe possède plusieurs chantiers
+     */
+    #[ORM\OneToMany(
+        mappedBy: 'equipe',
+        targetEntity: Chantier::class
+    )]
+    private Collection $chantiers;
+
+    /**
+     * 🔹 Relation avec ChantierPresta
+     */
+    #[ORM\OneToMany(
+        mappedBy: 'equipe',
+        targetEntity: ChantierPresta::class
+    )]
+    private Collection $chantiersPresta;
+
     public function __construct()
     {
-        $this->chantiersPresta = new ArrayCollection();
         $this->chantiers = new ArrayCollection();
-        $this->equipe = new ArrayCollection();
+        $this->chantiersPresta = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -56,7 +61,6 @@ class Equipe
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -68,12 +72,51 @@ class Equipe
     public function setMontantMo(?float $montantMo): static
     {
         $this->montantMo = $montantMo;
+        return $this;
+    }
+
+    public function getIndice(): ?float
+    {
+        return $this->indice;
+    }
+
+    public function setIndice(?float $indice): static
+    {
+        $this->indice = $indice;
+        return $this;
+    }
+
+    /**
+     * 🔹 Chantiers
+     */
+    public function getChantiers(): Collection
+    {
+        return $this->chantiers;
+    }
+
+    public function addChantier(Chantier $chantier): static
+    {
+        if (!$this->chantiers->contains($chantier)) {
+            $this->chantiers->add($chantier);
+            $chantier->setEquipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChantier(Chantier $chantier): static
+    {
+        if ($this->chantiers->removeElement($chantier)) {
+            if ($chantier->getEquipe() === $this) {
+                $chantier->setEquipe(null);
+            }
+        }
 
         return $this;
     }
 
     /**
-     * @return Collection<int, ChantierPresta>
+     * 🔹 ChantierPresta
      */
     public function getChantiersPresta(): Collection
     {
@@ -93,53 +136,10 @@ class Equipe
     public function removeChantierPresta(ChantierPresta $chantierPresta): static
     {
         if ($this->chantiersPresta->removeElement($chantierPresta)) {
-            // set the owning side to null (unless already changed)
             if ($chantierPresta->getEquipe() === $this) {
                 $chantierPresta->setEquipe(null);
             }
         }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, chantier>
-     */
-    public function getequipe(): Collection
-    {
-        return $this->equipe;
-    }
-
-    public function addEquipe(chantier $equipe): static
-    {
-        if (!$this->equipe->contains($equipe)) {
-            $this->equipe->add($equipe);
-            $equipe->setEquipe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEquipe(chantier $equipe): static
-    {
-        if ($this->equipe->removeElement($equipe)) {
-            // set the owning side to null (unless already changed)
-            if ($equipe->getEquipe() === $this) {
-                $equipe->setEquipe(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getIndice(): ?float
-    {
-        return $this->indice;
-    }
-
-    public function setIndice(?float $indice): static
-    {
-        $this->indice = $indice;
 
         return $this;
     }

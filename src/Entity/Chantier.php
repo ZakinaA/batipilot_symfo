@@ -68,20 +68,29 @@ class Chantier
 
 
     #[ORM\ManyToOne(cascade: ['persist'], inversedBy: 'chantiers')]
-    //#[ORM\JoinColumn(nullable: false)]
-    //#[ORM\ManyToOne(inversedBy: 'chantiers')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Client $client = null;
 
     /**
      * @var Collection<int, ChantierEtape>
      */
-    #[ORM\OneToMany(targetEntity: ChantierEtape::class, mappedBy: 'chantier')]
+    #[ORM\OneToMany(
+    targetEntity: ChantierEtape::class,
+    mappedBy: 'chantier',
+    cascade: ['remove'],
+    orphanRemoval: true
+    )]
     private Collection $chantierEtapes;
 
     /**
      * @var Collection<int, ChantierPoste>
      */
-    #[ORM\OneToMany(targetEntity: ChantierPoste::class, mappedBy: 'chantier')]
+   #[ORM\OneToMany(
+    targetEntity: ChantierPoste::class,
+    mappedBy: 'chantier',
+    cascade: ['remove'],
+    orphanRemoval: true
+    )]
     private Collection $chantierPostes;
 
     #[ORM\ManyToOne]
@@ -91,10 +100,15 @@ class Chantier
     /**
      * @var Collection<int, ChantierPresta>
      */
-    #[ORM\OneToMany(targetEntity: ChantierPresta::class, mappedBy: 'chantier')]
+    #[ORM\OneToMany(
+    targetEntity: ChantierPresta::class,
+    mappedBy: 'chantier',
+    cascade: ['remove'],
+    orphanRemoval: true
+    )]
     private Collection $chantierPrestations;
 
-    #[ORM\ManyToOne(inversedBy: 'equipe')]
+    #[ORM\ManyToOne(inversedBy: 'chantiers')]
     private ?Equipe $equipe = null;
 
     public function __construct()
@@ -102,8 +116,6 @@ class Chantier
         $this->chantierEtapes = new ArrayCollection();
         $this->chantierPostes = new ArrayCollection();
         $this->chantierPrestations = new ArrayCollection();
-        $this->equipes = new ArrayCollection();
-
     }
 
     public function getId(): ?int
