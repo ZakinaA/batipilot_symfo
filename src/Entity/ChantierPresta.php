@@ -26,6 +26,11 @@ class ChantierPresta
     #[ORM\ManyToOne(inversedBy: 'chantierPrestations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Poste $poste = null;
+    
+    #[ORM\ManyToOne(inversedBy: 'chantiersPresta')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Equipe $equipe = null;
+
 
     public function getId(): ?int
     {
@@ -79,4 +84,16 @@ class ChantierPresta
 
         return $this;
     }
+    
+    public function getEquipe(): ?Equipe
+    {
+        return $this->equipe;
+    }
+
+    public function setEquipe(?Equipe $equipe): static
+    {
+        $this->equipe = $equipe;
+        return $this;
+    }
+
 }
